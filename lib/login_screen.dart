@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,15 +12,17 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Login',
-                  style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
+                  'login',
+                  style: TextStyle(
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 SizedBox(
                   height: 40.0,
                 ),
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
-                  controller: emailController,
                   decoration: InputDecoration(
                     labelText: 'Email Address',
                     prefixIcon: Icon(
@@ -31,48 +30,34 @@ class LoginScreen extends StatelessWidget {
                     ),
                     border: OutlineInputBorder(),
                   ),
-                  onFieldSubmitted: (value) {
-                    print(value);
-                  },
-                  onChanged: (value) {
-                    print(value);
-                  },
                 ),
                 SizedBox(
                   height: 10.0,
                 ),
                 TextFormField(
-                  controller: passwordController,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: 'password',
-                    prefixIcon: Icon(Icons.lock),
+                    labelText: 'Password',
+                    prefixIcon: Icon(
+                      Icons.lock,
+                    ),
                     suffixIcon: Icon(
                       Icons.remove_red_eye,
                     ),
                     border: OutlineInputBorder(),
                   ),
-                  onChanged: (value) {
-                    print(value);
-                  },
-                  onFieldSubmitted: (value) {
-                    print(value);
-                  },
                 ),
                 SizedBox(
                   height: 20.0,
                 ),
                 Container(
-                  color: Colors.blue,
                   width: double.infinity,
+                  color: Colors.blue,
                   child: MaterialButton(
-                    onPressed: () {
-                      print(emailController.text);
-                      print(passwordController.text);
-                    },
+                    onPressed: () {},
                     child: Text(
-                      'login',
+                      'Login',
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -80,18 +65,20 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 20.0,
+                  height: 10.0,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Don\'t have an account?'),
+                    Text('Don\'t have account?'),
                     TextButton(
                       onPressed: () {},
-                      child: Text('Register Now'),
+                      child: Text(
+                        'Sign Up'
+                      ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
