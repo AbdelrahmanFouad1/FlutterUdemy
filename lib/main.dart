@@ -1,6 +1,4 @@
-import 'package:first_flutter_app/login_screen.dart';
-import 'package:first_flutter_app/message_screen.dart';
-import 'package:first_flutter_app/user_screen.dart';
+import 'package:first_flutter_app/counter_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: UserScreen(),
+      home: CounterScreen(),
     );
   }
 
