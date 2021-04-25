@@ -1,3 +1,4 @@
+import 'package:first_flutter_app/bmi_screen.dart';
 import 'package:first_flutter_app/counter_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CounterScreen(),
+      home: BMIScreen(),
     );
   }
 
