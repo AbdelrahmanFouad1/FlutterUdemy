@@ -1,16 +1,7 @@
+import 'package:first_flutter_app/models/user/user_models.dart';
 import 'package:flutter/material.dart';
 
-class UserModel {
-  final int id;
-  final String name;
-  final String phone;
 
-  UserModel({
-    @required this.id,
-    @required this.name,
-    @required this.phone
-  });
-}
 
 class UserScreen extends StatelessWidget {
 

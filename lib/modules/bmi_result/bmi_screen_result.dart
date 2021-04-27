@@ -22,7 +22,7 @@ class BMIScreenResult extends StatelessWidget {
           ),
         ),
         title: Text(
-          'BMI Result'
+            'BMI Result'
         ),
       ),
       body: Center(

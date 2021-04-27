@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:first_flutter_app/bmi_screen_result.dart';
+import 'package:first_flutter_app/modules/bmi_result/bmi_screen_result.dart';
 import 'package:flutter/material.dart';
 
 class BMIScreen extends StatefulWidget {
@@ -42,15 +42,15 @@ class _BMIScreenState extends State<BMIScreen> {
                           children: [
                             Image(
                               image: AssetImage(
-                                'assets/images/male.png'
+                                  'assets/images/male.png'
                               ),
                             ),
                             SizedBox(height: 15.0,),
                             Text(
                               'MALE',
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25.0
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25.0
                               ),
                             ),
                           ],
@@ -122,8 +122,8 @@ class _BMIScreenState extends State<BMIScreen> {
                         Text(
                           '${height.round()}',
                           style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 40,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 40,
                           ),
                         ),
                         SizedBox(width: 3.0,),
@@ -137,14 +137,14 @@ class _BMIScreenState extends State<BMIScreen> {
                       ],
                     ),
                     Slider(
-                        value: height,
-                        max: 220,
-                        min: 80,
-                        onChanged: (value){
-                          setState(() {
-                            height = value;
-                          });
-                        },
+                      value: height,
+                      max: 220,
+                      min: 80,
+                      onChanged: (value){
+                        setState(() {
+                          height = value;
+                        });
+                      },
                     )
                   ],
                 ),
@@ -287,14 +287,14 @@ class _BMIScreenState extends State<BMIScreen> {
               onPressed: (){
                 var result = weight/pow(height/100, 2);
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => BMIScreenResult(
-                          age: age,
-                          isMale: isMale,
-                          result: result.round(),
-                        ),
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BMIScreenResult(
+                      age: age,
+                      isMale: isMale,
+                      result: result.round(),
                     ),
+                  ),
                 );
               },
               child: Text(
