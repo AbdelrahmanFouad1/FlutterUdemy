@@ -30,20 +30,23 @@ Widget defaultButton({
     );
 
 Widget defaultTextField({
-  @required String label,
+
   @required TextEditingController controller,
-  @required IconData preFix,
-  IconData suffix,
   @required TextInputType textInputType,
-  bool isPassword = false,
+  @required IconData preFix,
+  @required String label,
+  IconData suffix,
   @required Function validator,
+  bool isPassword = false,
   Function suffixPressed,
+  Function onTap,
 }) =>
     TextFormField(
       keyboardType: textInputType,
       controller: controller,
       obscureText: isPassword,
       validator: validator,
+      onTap: onTap,
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: Icon(
@@ -58,3 +61,38 @@ Widget defaultTextField({
         border: OutlineInputBorder(),
       ),
     );
+
+Widget buildTaskItem(Map model) => Padding(
+  padding: const EdgeInsets.all(20.0),
+  child: Row(
+    children: [
+      CircleAvatar(
+        radius: 40.0,
+        child: Text(
+            '${model['time']}',
+        ),
+      ),
+      SizedBox(width: 20.0,),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '${model['title']}',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 5.0,),
+          Text(
+            '${model['date']}',
+            style: TextStyle(
+              color: Colors.grey,
+            ),
+          ),
+        ],
+      ),
+    ],
+  ),
+);
