@@ -1,3 +1,5 @@
+import 'package:conditional_builder/conditional_builder.dart';
+import 'package:first_flutter_app/shared/cubit/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -62,37 +64,170 @@ Widget defaultTextField({
       ),
     );
 
-Widget buildTaskItem(Map model) => Padding(
-  padding: const EdgeInsets.all(20.0),
-  child: Row(
-    children: [
-      CircleAvatar(
-        radius: 40.0,
-        child: Text(
-            '${model['time']}',
-        ),
-      ),
-      SizedBox(width: 20.0,),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            '${model['title']}',
-            style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold,
-            ),
+Widget buildTaskItem(Map model, context) => Dismissible(
+  key: Key(model['id'].toString()),
+  child:  Padding(
+  
+    padding: const EdgeInsets.all(20.0),
+  
+    child: Row(
+  
+      children: [
+  
+        CircleAvatar(
+  
+          radius: 40.0,
+  
+          child: Text(
+  
+              '${model['time']}',
+  
           ),
-          SizedBox(height: 5.0,),
+  
+        ),
+  
+        SizedBox(width: 20.0,),
+  
+        Expanded(
+  
+          child: Column(
+  
+            crossAxisAlignment: CrossAxisAlignment.start,
+  
+            mainAxisSize: MainAxisSize.min,
+  
+            children: [
+  
+              Text(
+  
+                '${model['title']}',
+  
+                style: TextStyle(
+  
+                  fontSize: 18.0,
+  
+                  fontWeight: FontWeight.bold,
+  
+                ),
+  
+              ),
+  
+              SizedBox(height: 5.0,),
+  
+              Text(
+  
+                '${model['date']}',
+  
+                style: TextStyle(
+  
+                  color: Colors.grey,
+  
+                ),
+  
+              ),
+  
+            ],
+  
+          ),
+  
+        ),
+  
+        SizedBox(width: 20.0,),
+  
+        IconButton(
+  
+            icon: Icon(
+  
+              Icons.check_box,
+  
+              color: Colors.green,
+  
+            ),
+  
+            onPressed: (){
+  
+              AppCubit.get(context).updateData(
+  
+                status: 'done',
+  
+                id: model['id'],
+  
+              );
+  
+            },
+  
+            ),
+  
+        IconButton(
+  
+          icon: Icon(
+  
+            Icons.archive,
+  
+            color: Colors.black45,
+  
+          ),
+  
+          onPressed: (){
+  
+            AppCubit.get(context).updateData(
+  
+              status: 'archive',
+  
+              id: model['id'],
+  
+            );
+  
+          },
+  
+        ),
+  
+      ],
+  
+    ),
+  
+  ),
+  onDismissed: (direction){
+    AppCubit.get(context).deleteData(id: model['id'],);
+  },
+);
+
+Widget tasksBuilder ({
+  @required List<Map> tasks,
+}) => ConditionalBuilder(
+  condition: tasks.length > 0,
+  builder: (context) {
+    return ListView.separated(
+        itemBuilder: (context, index) => buildTaskItem(tasks[index], context),
+        separatorBuilder: (context, index) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0,),
+          child: Container(
+            width: double.infinity,
+            height: 1.0,
+            color: Colors.grey[300],
+          ),
+        ),
+        itemCount: tasks.length);
+  },
+  fallback: (context){
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.menu,
+            size: 100.0,
+            color: Colors.grey,
+          ),
           Text(
-            '${model['date']}',
+            'No Tasks Yet, Please add Some Tasks',
             style: TextStyle(
-              color: Colors.grey,
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ],
       ),
-    ],
-  ),
+    );
+  },
 );

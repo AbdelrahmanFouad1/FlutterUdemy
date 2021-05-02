@@ -4,14 +4,12 @@ import 'package:first_flutter_app/modules/done/done_screen.dart';
 import 'package:first_flutter_app/modules/tasks/new_tasks_screen.dart';
 import 'package:first_flutter_app/shared/components/components.dart';
 import 'package:first_flutter_app/shared/components/constants.dart';
+import 'package:first_flutter_app/shared/cubit/cubit.dart';
+import 'package:first_flutter_app/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
-
-class HomeLayout extends StatefulWidget {
-  @override
-  _HomeLayoutState createState() => _HomeLayoutState();
-}
 
 /*to create database in sqflite
 * 1. database created
@@ -24,74 +22,54 @@ class HomeLayout extends StatefulWidget {
 * 7. delete from database
 * */
 
-class _HomeLayoutState extends State<HomeLayout> {
-  int currentIndex = 0;
-  List<Widget> screen = [
-    NewTasksScreen(),
-    DoneTasksScreen(),
-    ArchivedTasksScreen(),
-  ];
+class HomeLayout extends StatelessWidget
+{
 
-  List<String> title = [
-    'New Task',
-    'Done Task',
-    'Archived Task',
-  ];
 
-  Database database;
+
   var scaffoldKey = GlobalKey<ScaffoldState>();
   var formKey = GlobalKey<FormState>();
-  bool isBottomSheetShown = false;
-  IconData defaultIcon = Icons.edit;
+
   var titleController = TextEditingController();
   var timeController = TextEditingController();
   var dateController = TextEditingController();
 
-
-  @override
-  void initState() {
-    super.initState();
-
-    createDatabase();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-        title: Text(
-          title[currentIndex],
-        ),
-      ),
-      body: ConditionalBuilder(
-        condition: tasks.length > 0 ,
-        builder: (context)=> screen[currentIndex],
-        fallback: (context)=> Center(child: CircularProgressIndicator()),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (isBottomSheetShown) {
-            if (formKey.currentState.validate()) {
-              insertToDatabase(
-                title: titleController.text,
-                date: dateController.text,
-                time: timeController.text,
-              ).then((value) {
-                getDataFromDatabase(database).then((value) {
-                  Navigator.pop(context);
-                  setState(() {
-                    isBottomSheetShown = false;
-                    defaultIcon = Icons.edit;
-                    tasks = value;
-                  });
-                });
-              });
-            }
-          } else {
-            scaffoldKey.currentState
-                .showBottomSheet(
-                  (context) => Container(
+
+    return BlocProvider(
+      create: (BuildContext context) => AppCubit()..createDatabase(),
+      child: BlocConsumer<AppCubit, AppStates>(
+        listener: (BuildContext context, state) {
+          if(state is AppInsertDatabaseState){
+            Navigator.pop(context);
+          }
+        },
+        builder: (BuildContext context, state) {
+          AppCubit cubit = AppCubit.get(context);
+          return Scaffold(
+          key: scaffoldKey,
+          appBar: AppBar(
+            title: Text(
+              cubit.titles[cubit.currentIndex],
+            ),
+          ),
+          body: ConditionalBuilder(
+            condition: state is! AppGetDatabaseLoadingState  ,
+            builder: (context)=> cubit.screens[cubit.currentIndex],
+            fallback: (context)=> Center(child: CircularProgressIndicator()),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              print(cubit.newTasks);
+              if (cubit.isBottomSheetShown) {
+                if (formKey.currentState.validate()) {
+                  cubit.insertToDatabase(title: titleController.text, date: dateController.text, time: timeController.text);
+                }
+              } else {
+                scaffoldKey.currentState
+                    .showBottomSheet(
+                      (context) => Container(
                     padding: EdgeInsets.all(20.0),
                     child: Form(
                       key: formKey,
@@ -161,105 +139,53 @@ class _HomeLayoutState extends State<HomeLayout> {
                     ),
                   ),
                   elevation: 20.0,
-                )
-                .closed
-                .then((value) {
-              isBottomSheetShown = false;
-              setState(() {
-                defaultIcon = Icons.edit;
-              });
-            });
-            isBottomSheetShown = true;
-            setState(() {
-              defaultIcon = Icons.add;
-            });
-          }
-        },
-        child: Icon(
-          defaultIcon,
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.menu,
+                ).closed
+                    .then((value) {
+                  cubit.changeBottomSheetState(isShow: false, icon: Icons.edit);
+                });
+                cubit.changeBottomSheetState(isShow: true, icon: Icons.add);
+              }
+            },
+            child: Icon(
+              cubit.fabIcon,
             ),
-            label: 'Tasks',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.check_circle_outline,
-            ),
-            label: 'Done',
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            currentIndex: cubit.currentIndex,
+            onTap: (index) {
+              cubit.changeIndex(index) ;
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.menu,
+                ),
+                label: 'Tasks',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.check_circle_outline,
+                ),
+                label: 'Done',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.archive_outlined,
+                ),
+                label: 'Archived',
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.archive_outlined,
-            ),
-            label: 'Archived',
-          ),
-        ],
+        ); },
+
       ),
     );
   }
 
-  void createDatabase() async {
-    database = await openDatabase('todo.dp', version: 1,
-        onCreate: (database, version) async {
-      /*
-          * id int
-          * title String
-          * date String
-          * time String
-          * status String
-          */
-      print('Database Created');
-      await database
-          .execute(
-              'CREATE TABLE tasks (id INTEGER PRIMARY KEY, title TEXT, date TEXT, time TEXT, status TEXT)')
-          .then((value) {
-        print('Table Created');
-      }).catchError((error) {
-        print('Error whe creating table ${error.toString()}');
-      });
-    }, onOpen: (database) {
-      getDataFromDatabase(database).then((value) {
-        setState(() {
-          tasks = value;
-        });
-      });
-      print('Database Opened');
-    });
-  }
 
-  Future insertToDatabase({
-    @required String title,
-    @required String date,
-    @required String time,
-  }) async {
-    return await database.transaction((txn) {
-      txn
-          .rawInsert(
-              'INSERT INTO tasks(title, date, time, status) VALUES("$title", "$date", "$time", "new")')
-          .then(
-            (value) => print('$value Insert Successfully'),
-          )
-          .catchError(
-            (error) => print('Error whe Insert new Row  ${error.toString()}'),
-          );
-      return null;
-    });
-  }
-
-  Future<List<Map>> getDataFromDatabase(database) async {
-    return await database.rawQuery('SELECT * FROM tasks');
-  }
 }
+
+
+
+
