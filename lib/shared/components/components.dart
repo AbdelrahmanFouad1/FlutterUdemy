@@ -54,12 +54,13 @@ Widget defaultTextField({
         prefixIcon: Icon(
           preFix,
         ),
-        suffixIcon: suffix != null ? IconButton(
-          onPressed: suffixPressed,
-            icon: Icon(
-          suffix,
-        )
-      ) : null,
+        suffixIcon: suffix != null
+            ? IconButton(
+                onPressed: suffixPressed,
+                icon: Icon(
+                  suffix,
+                ))
+            : null,
         border: OutlineInputBorder(),
       ),
     );
@@ -181,7 +182,7 @@ Widget buildTaskItem(Map model, context) => Dismissible(
           },
   
         ),
-  
+
       ],
   
     ),

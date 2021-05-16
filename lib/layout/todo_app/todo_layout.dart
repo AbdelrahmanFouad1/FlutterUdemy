@@ -100,8 +100,7 @@ class HomeLayout extends StatelessWidget
                               showTimePicker(
                                 context: context,
                                 initialTime: TimeOfDay.now(),
-                              ).then((value) => timeController.text =
-                                  value.format(context).toString());
+                              ).then((value) => timeController.text = value.format(context).toString());
                             },
                             validator: (String value) {
                               if (value.isEmpty) {
