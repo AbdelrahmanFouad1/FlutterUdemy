@@ -14,6 +14,7 @@ void main() {
   Bloc.observer = MyBlocObserver();
   runApp(MyApp());
 }
+//jlj
 
 class MyApp extends StatelessWidget {
   @override
