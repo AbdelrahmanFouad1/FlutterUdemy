@@ -153,4 +153,11 @@ class AppCubit extends Cubit<AppStates> {
 
     emit(AppChangeBottomSheetState());
   }
+
+  bool darkMode = false;
+
+  void changeTheme(){
+    darkMode = !darkMode;
+    emit(AppChangeThemeState());
+  }
 }
