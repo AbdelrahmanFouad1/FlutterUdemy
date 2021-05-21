@@ -264,6 +264,8 @@ Widget buildArticleItem(
               Expanded(
                 child: Text(
                   '${ article['title'] }',
+                  textAlign: TextAlign.end,
+                  textWidthBasis: TextWidthBasis.parent,
                   style: Theme.of(context).textTheme.bodyText1,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,

@@ -4,6 +4,7 @@ import 'package:first_flutter_app/shared/bloc_observer.dart';
 import 'package:first_flutter_app/shared/cubit/cubit.dart';
 import 'package:first_flutter_app/shared/cubit/states.dart';
 import 'package:first_flutter_app/shared/network/remote/dio_helper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.deepOrange,
               scaffoldBackgroundColor: Colors.white,
               appBarTheme: AppBarTheme(
+                titleSpacing: 20.0,
                 backwardsCompatibility: false,
                 systemOverlayStyle: SystemUiOverlayStyle(
                   statusBarColor: Colors.white,
@@ -61,7 +63,7 @@ class MyApp extends StatelessWidget {
                 bodyText1: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black
+                    color: Colors.black,
                 ),
               ),
             ),
@@ -69,6 +71,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.deepOrange,
               scaffoldBackgroundColor: HexColor('333739'),
               appBarTheme: AppBarTheme(
+                titleSpacing: 20.0,
                 backwardsCompatibility: false,
                 systemOverlayStyle: SystemUiOverlayStyle(
                   statusBarColor: HexColor('333739'),
@@ -96,7 +99,7 @@ class MyApp extends StatelessWidget {
                 bodyText1: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white
+                    color: Colors.white,
                 ),
               ),
             ),
