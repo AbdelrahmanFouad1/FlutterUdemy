@@ -29,7 +29,7 @@ class NewsLayout extends StatelessWidget {
                     Icons.search
                 ),
                 onPressed: (){
-                  changedTo(context, SearchScreen());
+                  navigateTo(context, SearchScreen());
                 },
               ),
               IconButton(
