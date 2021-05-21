@@ -42,6 +42,7 @@ Widget defaultTextField({
   bool isPassword = false,
   Function suffixPressed,
   Function onTap,
+  Function onchange,
 }) =>
     TextFormField(
       keyboardType: textInputType,
@@ -49,6 +50,7 @@ Widget defaultTextField({
       obscureText: isPassword,
       validator: validator,
       onTap: onTap,
+      onChanged: onchange,
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: Icon(
@@ -294,4 +296,11 @@ Widget articleBuilder(list, context) => ConditionalBuilder(
     itemCount: list.length,
   ),
   fallback: (context) => Center(child: CircularProgressIndicator()),
+);
+
+void changedTo(context, Widget) => Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => Widget,
+  ),
 );

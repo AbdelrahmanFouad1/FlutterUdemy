@@ -12,7 +12,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:first_flutter_app/layout/news_app/cubit/states.dart';
 
 import 'layout/news_app/news_layout.dart';
 
@@ -37,12 +36,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) => AppCubit()..changeTheme(
-        fromShared : isDark
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (BuildContext context) => NewsCubit()
+              ..getBusiness()
+              ..getSports()
+              ..getScience()),
+        BlocProvider(
+          create: (BuildContext context) =>
+              AppCubit()..changeTheme(fromShared: isDark),
+        ),
+      ],
       child: BlocConsumer<AppCubit, AppStates>(
-        listener: (BuildContext context, state) {  },
+        listener: (BuildContext context, state) {},
         builder: (BuildContext context, state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
