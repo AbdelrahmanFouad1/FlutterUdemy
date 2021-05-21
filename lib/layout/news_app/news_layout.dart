@@ -19,6 +19,7 @@ class NewsLayout extends StatelessWidget {
           var cubit = NewsCubit.get(context);
           return Scaffold(
             appBar: AppBar(
+              titleSpacing: 20.0,
               title: Text(
                   'News App'
               ),
