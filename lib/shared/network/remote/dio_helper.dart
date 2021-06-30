@@ -8,6 +8,7 @@ class DioHelper {
     dio = Dio(
       BaseOptions(
         baseUrl: 'https://newsapi.org/',
+        receiveDataWhenStatusError: true,
       ),
     );
   }
