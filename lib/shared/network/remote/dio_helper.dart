@@ -9,6 +9,7 @@ class DioHelper {
       BaseOptions(
         baseUrl: 'https://newsapi.org/',
         receiveDataWhenStatusError: true,
+
       ),
     );
   }
