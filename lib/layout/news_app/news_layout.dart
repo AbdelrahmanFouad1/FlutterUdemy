@@ -1,6 +1,6 @@
 import 'package:first_flutter_app/layout/news_app/cubit/cubit.dart';
 import 'package:first_flutter_app/layout/news_app/cubit/states.dart';
-import 'package:first_flutter_app/modules/search/search_screen.dart';
+import 'package:first_flutter_app/modules/news_app/search/search_screen.dart';
 import 'package:first_flutter_app/shared/components/components.dart';
 import 'package:first_flutter_app/shared/cubit/cubit.dart';
 import 'package:first_flutter_app/shared/network/remote/dio_helper.dart';

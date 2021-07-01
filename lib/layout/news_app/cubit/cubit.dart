@@ -1,7 +1,7 @@
 import 'package:first_flutter_app/layout/news_app/cubit/states.dart';
-import 'package:first_flutter_app/modules/business/business_screen.dart';
-import 'package:first_flutter_app/modules/science/Science_screen.dart';
-import 'package:first_flutter_app/modules/sports/sports_screen.dart';
+import 'package:first_flutter_app/modules/news_app/business/business_screen.dart';
+import 'package:first_flutter_app/modules/news_app/science/Science_screen.dart';
+import 'package:first_flutter_app/modules/news_app/sports/sports_screen.dart';
 import 'package:first_flutter_app/shared/network/remote/dio_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

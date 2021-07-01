@@ -1,5 +1,5 @@
 import 'package:conditional_builder/conditional_builder.dart';
-import 'package:first_flutter_app/modules/web_view_screen/web_view_screen.dart';
+import 'package:first_flutter_app/modules/news_app/web_view_screen/web_view_screen.dart';
 import 'package:first_flutter_app/shared/cubit/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -303,13 +303,22 @@ Widget articleBuilder(list, context, {isSearch = false,}) => ConditionalBuilder(
     itemBuilder: (context, index) => buildArticleItem(list[index], context),
     separatorBuilder: (context, index) => myDivider(),
     itemCount: list.length,
-  ),
-  fallback: (context) =>isSearch? Container() : Center(child: CircularProgressIndicator()),
-);
+      ),
+      fallback: (context) =>
+          isSearch ? Container() : Center(child: CircularProgressIndicator()),
+    );
 
-void navigateTo(context, Widget) => Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (context) => Widget,
-  ),
-);
+void navigateTo(context, widget) => Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => widget,
+      ),
+    );
+
+void navigateFinish(context, widget) => Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => widget,
+      ),
+      (route) => false,
+    );

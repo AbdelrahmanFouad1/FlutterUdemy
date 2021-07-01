@@ -1,6 +1,7 @@
-import 'package:first_flutter_app/modules/archived/Archived_screen.dart';
-import 'package:first_flutter_app/modules/done/done_screen.dart';
-import 'package:first_flutter_app/modules/tasks/new_tasks_screen.dart';
+
+import 'package:first_flutter_app/modules/todo_app/archived/Archived_screen.dart';
+import 'package:first_flutter_app/modules/todo_app/done/done_screen.dart';
+import 'package:first_flutter_app/modules/todo_app/tasks/new_tasks_screen.dart';
 import 'package:first_flutter_app/shared/cubit/states.dart';
 import 'package:first_flutter_app/shared/network/local/cache_helper.dart';
 import 'package:flutter/material.dart';

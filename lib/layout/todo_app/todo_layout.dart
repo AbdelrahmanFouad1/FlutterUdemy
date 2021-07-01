@@ -1,7 +1,4 @@
 import 'package:conditional_builder/conditional_builder.dart';
-import 'package:first_flutter_app/modules/archived/Archived_screen.dart';
-import 'package:first_flutter_app/modules/done/done_screen.dart';
-import 'package:first_flutter_app/modules/tasks/new_tasks_screen.dart';
 import 'package:first_flutter_app/shared/components/components.dart';
 import 'package:first_flutter_app/shared/components/constants.dart';
 import 'package:first_flutter_app/shared/cubit/cubit.dart';
