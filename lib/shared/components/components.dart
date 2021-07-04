@@ -3,6 +3,7 @@ import 'package:first_flutter_app/modules/news_app/web_view_screen/web_view_scre
 import 'package:first_flutter_app/shared/cubit/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 Widget defaultButton({
   @required String text,
@@ -32,8 +33,18 @@ Widget defaultButton({
       ),
     );
 
-Widget defaultTextField({
+Widget defaultTextButton({
+  @required Function function,
+  @required String text,
+}) =>
+    TextButton(
+      onPressed: function,
+      child: Text(
+        text.toUpperCase(),
+      ),
+    );
 
+Widget defaultTextField({
   @required TextEditingController controller,
   @required TextInputType textInputType,
   @required IconData preFix,
@@ -44,6 +55,7 @@ Widget defaultTextField({
   Function suffixPressed,
   Function onTap,
   Function onchange,
+  Function onSubmit,
 }) =>
     TextFormField(
       keyboardType: textInputType,
@@ -51,6 +63,7 @@ Widget defaultTextField({
       obscureText: isPassword,
       validator: validator,
       onTap: onTap,
+      onFieldSubmitted: onSubmit,
       onChanged: onchange,
       decoration: InputDecoration(
         labelText: label,
@@ -322,3 +335,36 @@ void navigateFinish(context, widget) => Navigator.pushAndRemoveUntil(
       ),
       (route) => false,
     );
+
+void showToast({
+  @required String message,
+  @required ToastStates state,
+}) => Fluttertoast.showToast(
+    msg: message,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 5,
+    backgroundColor: chooseToastColor(state),
+    textColor: Colors.white,
+    fontSize: 16.0);
+
+// enum
+enum ToastStates { SUCCESS, ERROR, WARNING }
+
+Color chooseToastColor(ToastStates state) {
+  Color color;
+
+  switch (state) {
+    case ToastStates.SUCCESS:
+      color = Colors.green;
+      break;
+    case ToastStates.ERROR:
+      color = Colors.red;
+      break;
+    case ToastStates.WARNING:
+      color = Colors.amber;
+      break;
+  }
+
+  return color;
+}

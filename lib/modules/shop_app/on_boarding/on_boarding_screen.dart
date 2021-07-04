@@ -1,5 +1,6 @@
 import 'package:first_flutter_app/modules/shop_app/login/shop_login_scree.dart';
 import 'package:first_flutter_app/shared/components/components.dart';
+import 'package:first_flutter_app/shared/network/local/cache_helper.dart';
 import 'package:first_flutter_app/shared/style/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -45,19 +46,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   bool isLast = false;
 
+  void submit(){
+    CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
+      navigateFinish(context, ShopLoginScreen(),);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          TextButton(
-              onPressed: () {
-                navigateFinish(context, ShopLoginScreen(),);
-              } ,
-              child: Text(
-                'SKIP'
-              ),
+          defaultTextButton(
+              function: submit,
+              text: 'SKIP'
           ),
         ],
       ),
@@ -102,7 +104,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 FloatingActionButton(
                     onPressed: (){
                       if(isLast){
-                        navigateFinish(context, ShopLoginScreen(),);
+                        submit();
                       }else{
                         boardController.nextPage(
                           duration: Duration(

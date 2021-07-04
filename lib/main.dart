@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:first_flutter_app/layout/news_app/cubit/cubit.dart';
+import 'package:first_flutter_app/layout/shop_app/shop_layout.dart';
+import 'package:first_flutter_app/modules/shop_app/login/shop_login_scree.dart';
 import 'package:first_flutter_app/modules/shop_app/on_boarding/on_boarding_screen.dart';
 import 'package:first_flutter_app/shared/bloc_observer.dart';
 import 'package:first_flutter_app/shared/cubit/cubit.dart';
@@ -26,15 +28,33 @@ void main() async
   DioHelper.init();
   await CacheHelper.init();
 
-  bool isDark = CacheHelper.getBoolean(key: 'isDark');
-  runApp(MyApp(isDark));
+  Widget widget;
+  bool isDark = CacheHelper.getData(key: 'isDark');
+  bool onBoarding = CacheHelper.getData(key: 'onBoarding');
+  String token = CacheHelper.getData(key: 'token');
+
+  if(onBoarding != null){
+    if(token != null) widget = ShopLayout();
+    else widget = ShopLoginScreen();
+  }else{
+    widget = OnBoardingScreen();
+  }
+
+  runApp(MyApp(
+    isDark: isDark,
+    startWidget: widget,
+  ));
 }
 
 class MyApp extends StatelessWidget {
 
   final bool isDark;
+  final Widget startWidget;
 
-  MyApp(this.isDark);
+  MyApp({
+    this.isDark,
+    this.startWidget,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +77,9 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: lightTheme,
             darkTheme: darkTheme,
-            themeMode: AppCubit.get(context).darkMode? ThemeMode.dark : ThemeMode.light,
-            home: OnBoardingScreen(),
+            themeMode: ThemeMode.light,
+            // AppCubit.get(context).darkMode? ThemeMode.dark : ThemeMode.light,
+            home: startWidget,
           );
         },
       ),
