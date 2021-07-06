@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:first_flutter_app/layout/news_app/cubit/cubit.dart';
+import 'package:first_flutter_app/layout/shop_app/cubit/cubit.dart';
 import 'package:first_flutter_app/layout/shop_app/shop_layout.dart';
 import 'package:first_flutter_app/modules/shop_app/login/shop_login_scree.dart';
 import 'package:first_flutter_app/modules/shop_app/on_boarding/on_boarding_screen.dart';
 import 'package:first_flutter_app/shared/bloc_observer.dart';
+import 'package:first_flutter_app/shared/components/constants.dart';
 import 'package:first_flutter_app/shared/cubit/cubit.dart';
 import 'package:first_flutter_app/shared/cubit/states.dart';
 import 'package:first_flutter_app/shared/network/local/cache_helper.dart';
@@ -31,7 +33,8 @@ void main() async
   Widget widget;
   bool isDark = CacheHelper.getData(key: 'isDark');
   bool onBoarding = CacheHelper.getData(key: 'onBoarding');
-  String token = CacheHelper.getData(key: 'token');
+  token = CacheHelper.getData(key: 'token');
+  print(token);
 
   if(onBoarding != null){
     if(token != null) widget = ShopLayout();
@@ -68,6 +71,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (BuildContext context) =>
               AppCubit()..changeTheme(fromShared: isDark),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => ShopCubit()..getHomeData()..getCategoriesData()..getFavoritesData(),
         ),
       ],
       child: BlocConsumer<AppCubit, AppStates>(
