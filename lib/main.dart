@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
               AppCubit()..changeTheme(fromShared: isDark),
         ),
         BlocProvider(
-          create: (BuildContext context) => ShopCubit()..getHomeData()..getCategoriesData()..getFavoritesData(),
+          create: (BuildContext context) => ShopCubit()..getHomeData()..getCategoriesData()..getFavoritesData()..getUserData(),
         ),
       ],
       child: BlocConsumer<AppCubit, AppStates>(

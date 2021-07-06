@@ -4,6 +4,7 @@ import 'package:first_flutter_app/modules/shop_app/login/cubit/cubit.dart';
 import 'package:first_flutter_app/modules/shop_app/login/cubit/states.dart';
 import 'package:first_flutter_app/modules/shop_app/register/shop_register_screen.dart';
 import 'package:first_flutter_app/shared/components/components.dart';
+import 'package:first_flutter_app/shared/components/constants.dart';
 import 'package:first_flutter_app/shared/network/local/cache_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class ShopLoginScreen extends StatelessWidget {
 
               CacheHelper.saveData(
                   key: 'token', value: state.loginModel.data.token).then((value) {
+                    token = state.loginModel.data.token;
                     navigateFinish(context, ShopLayout());
               });
             } else {

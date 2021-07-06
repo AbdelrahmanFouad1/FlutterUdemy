@@ -3,6 +3,7 @@ import 'package:first_flutter_app/models/shop_app/categories_model.dart';
 import 'package:first_flutter_app/models/shop_app/change_favorites_model.dart';
 import 'package:first_flutter_app/models/shop_app/favorites_model.dart';
 import 'package:first_flutter_app/models/shop_app/home_model.dart';
+import 'package:first_flutter_app/models/shop_app/login_model.dart';
 import 'package:first_flutter_app/modules/shop_app/categories/categories_screen.dart';
 import 'package:first_flutter_app/modules/shop_app/favorites/favorites_screen.dart';
 import 'package:first_flutter_app/modules/shop_app/products/products_screen.dart';
@@ -137,6 +138,22 @@ class ShopCubit extends Cubit<ShopStates> {
     }).catchError((error) {
       print(error);
       emit(ShopErrorGetFavoritesStates());
+    });
+  }
+
+  ShopLoginModel userModel;
+
+  void getUserData() {
+    emit(ShopLoadingGetUserDataStates());
+    DioHelper.getData(
+      url: PROFILE,
+      token: token,
+    ).then((value) {
+      userModel = ShopLoginModel.fromJson(value.data);
+      emit(ShopSuccessGetUserDataStates(userModel));
+    }).catchError((error) {
+      print(error);
+      emit(ShopErrorGetUserDataStates());
     });
   }
 }
