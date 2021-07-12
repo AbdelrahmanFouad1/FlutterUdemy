@@ -17,6 +17,7 @@ class BoardingModel{
 });
 }
 
+
 class OnBoardingScreen extends StatefulWidget {
 
   @override

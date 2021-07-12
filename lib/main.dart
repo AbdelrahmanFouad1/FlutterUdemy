@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:first_flutter_app/layout/news_app/cubit/cubit.dart';
 import 'package:first_flutter_app/layout/shop_app/cubit/cubit.dart';
 import 'package:first_flutter_app/layout/shop_app/shop_layout.dart';
 import 'package:first_flutter_app/modules/shop_app/login/shop_login_scree.dart';
 import 'package:first_flutter_app/modules/shop_app/on_boarding/on_boarding_screen.dart';
+import 'package:first_flutter_app/modules/social_app/social_login/social_login_scree.dart';
 import 'package:first_flutter_app/shared/bloc_observer.dart';
 import 'package:first_flutter_app/shared/components/constants.dart';
 import 'package:first_flutter_app/shared/cubit/cubit.dart';
@@ -23,8 +25,11 @@ import 'layout/news_app/news_layout.dart';
 
 void main() async
 {
+
   // بيتأكد ان كل حاجه هنا في الميثود خلصت و بعدين يتفح الابلكيشن
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
 
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
@@ -85,7 +90,7 @@ class MyApp extends StatelessWidget {
             darkTheme: darkTheme,
             themeMode: ThemeMode.light,
             // AppCubit.get(context).darkMode? ThemeMode.dark : ThemeMode.light,
-            home: startWidget,
+            home: SocialLoginScreen(),
           );
         },
       ),
