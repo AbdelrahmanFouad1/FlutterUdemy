@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:first_flutter_app/layout/news_app/cubit/cubit.dart';
 import 'package:first_flutter_app/layout/shop_app/cubit/cubit.dart';
 import 'package:first_flutter_app/layout/shop_app/shop_layout.dart';
+import 'package:first_flutter_app/layout/social_app/cubit/cubit.dart';
+import 'package:first_flutter_app/layout/social_app/social_layout.dart';
 import 'package:first_flutter_app/modules/shop_app/login/shop_login_scree.dart';
 import 'package:first_flutter_app/modules/shop_app/on_boarding/on_boarding_screen.dart';
 import 'package:first_flutter_app/modules/social_app/social_login/social_login_scree.dart';
@@ -39,13 +41,21 @@ void main() async
   bool isDark = CacheHelper.getData(key: 'isDark');
   bool onBoarding = CacheHelper.getData(key: 'onBoarding');
   token = CacheHelper.getData(key: 'token');
-  print(token);
 
-  if(onBoarding != null){
-    if(token != null) widget = ShopLayout();
-    else widget = ShopLoginScreen();
-  }else{
-    widget = OnBoardingScreen();
+  uId = CacheHelper.getData(key: 'uId');
+  // print(token);
+
+  // if(onBoarding != null){
+  //   if(token != null) widget = ShopLayout();
+  //   else widget = ShopLoginScreen();
+  // }else{
+  //   widget = OnBoardingScreen();
+  // }
+
+  if(uId != null ){
+    widget = SocialLayout();
+  }else {
+    widget = SocialLoginScreen();
   }
 
   runApp(MyApp(
@@ -80,6 +90,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (BuildContext context) => ShopCubit()..getHomeData()..getCategoriesData()..getFavoritesData()..getUserData(),
         ),
+        BlocProvider(
+          create: (BuildContext context) => SocialCubit()..getUserData(),
+        ),
       ],
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (BuildContext context, state) {},
@@ -90,7 +103,7 @@ class MyApp extends StatelessWidget {
             darkTheme: darkTheme,
             themeMode: ThemeMode.light,
             // AppCubit.get(context).darkMode? ThemeMode.dark : ThemeMode.light,
-            home: SocialLoginScreen(),
+            home: startWidget,
           );
         },
       ),

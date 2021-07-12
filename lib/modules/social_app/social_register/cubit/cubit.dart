@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_flutter_app/models/social_app/social_user_model.dart';
 import 'package:first_flutter_app/modules/social_app/social_register/cubit/states.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,12 +22,37 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((value) {
-          print(value.user.email);
-          print(value.user.uid);
-      emit(SocialRegisterSuccessStates());
-    })
-        .catchError((error) {
+      userCreate(name: name, email: email, phone: phone, uId: value.user.uid);
+      // emit(SocialRegisterSuccessStates());
+    }).catchError((error) {
       emit(SocialRegisterErrorStates(error.toString()));
+    });
+  }
+
+  SocialUserModel model;
+
+  void userCreate({
+    @required String name,
+    @required String email,
+    @required String phone,
+    @required String uId,
+  }) {
+    model = SocialUserModel(
+        email: email,
+        name: name,
+        phone: phone,
+        uId: uId,
+        isEmailVerify: false
+    );
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .set(model.toMap())
+        .then((value) {
+      emit(SocialCreateSuccessStates());
+    }).catchError((error) {
+      print(error.toString());
+      emit(SocialCreateErrorStates(error.toString()));
     });
   }
 

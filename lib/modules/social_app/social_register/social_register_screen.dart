@@ -1,5 +1,6 @@
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:first_flutter_app/layout/shop_app/shop_layout.dart';
+import 'package:first_flutter_app/layout/social_app/social_layout.dart';
 import 'package:first_flutter_app/modules/social_app/social_register/cubit/cubit.dart';
 import 'package:first_flutter_app/modules/social_app/social_register/cubit/states.dart';
 import 'package:first_flutter_app/shared/components/components.dart';
@@ -20,7 +21,9 @@ class SocialRegisterScreen extends StatelessWidget {
       create: (BuildContext context) => SocialRegisterCubit(),
       child: BlocConsumer<SocialRegisterCubit, SocialRegisterStates>(
         listener: (context, state) {
-
+          if(state is SocialCreateSuccessStates){
+            navigateFinish(context, SocialLayout());
+          }
         },
         builder: (context, state) {
           var cubit = SocialRegisterCubit.get(context);

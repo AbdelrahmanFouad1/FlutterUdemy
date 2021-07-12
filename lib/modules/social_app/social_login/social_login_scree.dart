@@ -1,8 +1,10 @@
 import 'package:conditional_builder/conditional_builder.dart';
+import 'package:first_flutter_app/layout/social_app/social_layout.dart';
 import 'package:first_flutter_app/modules/social_app/social_login/cubit/cubit.dart';
 import 'package:first_flutter_app/modules/social_app/social_login/cubit/states.dart';
-import 'package:first_flutter_app/modules/social_app/social_register/shop_register_screen.dart';
+import 'package:first_flutter_app/modules/social_app/social_register/social_register_screen.dart';
 import 'package:first_flutter_app/shared/components/components.dart';
+import 'package:first_flutter_app/shared/network/local/cache_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,6 +26,14 @@ class SocialLoginScreen extends StatelessWidget {
                 message: state.error,
                 state: ToastStates.ERROR
             );
+          }
+          if(state is SocialLoginSuccessStates){
+            CacheHelper.saveData(
+                key: 'uId',
+                value: state.uId,
+            ).then((value) {
+              navigateFinish(context, SocialLayout());
+            });
           }
         },
         builder: (context, state) {
