@@ -40,6 +40,7 @@ dependencies:
   smooth_page_indicator: ^0.2.3
   fluttertoast: ^8.0.7
   carousel_slider: ^4.0.0
+  image_picker: ^0.8.1+4
 
   #Firebase
   firebase_core: "^1.3.0"
@@ -71,6 +72,10 @@ flutter:
       fonts:
         - asset: assets/fonts/janna.ttf
           weight: 700
+
+    - family: Iconly-Broken
+      fonts:
+        - asset: assets/fonts/iconly.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

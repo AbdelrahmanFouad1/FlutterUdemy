@@ -17,6 +17,7 @@ ThemeData darkTheme = ThemeData(
     backgroundColor: HexColor('333739'),
     elevation: 0.0,
     titleTextStyle: TextStyle(
+      fontFamily: 'janna',
       color: Colors.white,
       fontWeight: FontWeight.bold,
       fontSize: 20.0,
@@ -34,9 +35,20 @@ ThemeData darkTheme = ThemeData(
   ),
   textTheme: TextTheme(
     bodyText1: TextStyle(
+      fontFamily: 'janna',
       fontSize: 18.0,
       fontWeight: FontWeight.w600,
       color: Colors.white,
+    ),
+    subtitle1: TextStyle(
+        fontFamily: 'janna',
+        fontSize: 14.0,
+        fontWeight: FontWeight.w600,
+        color: Colors.white,
+        height: 1.3,
+      ),
+    caption: TextStyle(
+      fontFamily: 'janna',
     ),
   ),
   fontFamily: 'janna',
@@ -55,6 +67,7 @@ ThemeData lightTheme = ThemeData(
     backgroundColor: Colors.white,
     elevation: 0.0,
     titleTextStyle: TextStyle(
+      fontFamily: 'janna',
       color: Colors.black,
       fontWeight: FontWeight.bold,
       fontSize: 20.0,
@@ -71,9 +84,20 @@ ThemeData lightTheme = ThemeData(
       backgroundColor: Colors.white),
   textTheme: TextTheme(
     bodyText1: TextStyle(
+      fontFamily: 'janna',
       fontSize: 18.0,
       fontWeight: FontWeight.w600,
       color: Colors.black,
+    ),
+    subtitle1: TextStyle(
+      fontFamily: 'janna',
+      fontSize: 14.0,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
+      height: 1.3,
+    ),
+    caption: TextStyle(
+      fontFamily: 'janna',
     ),
   ),
   fontFamily: 'janna',

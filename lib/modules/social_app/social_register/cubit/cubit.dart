@@ -42,6 +42,9 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
         name: name,
         phone: phone,
         uId: uId,
+        image: 'https://image.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg',
+        cover: 'https://image.freepik.com/free-photo/shocked-bearded-adult-male-office-worker-looks-with-excitement-sits-desktop-with-blueprints-papers-prepares-engineering-project-surprised-have-deadline-designing-concept_273609-50129.jpg',
+        bio: 'write you bio ...',
         isEmailVerify: false
     );
     FirebaseFirestore.instance

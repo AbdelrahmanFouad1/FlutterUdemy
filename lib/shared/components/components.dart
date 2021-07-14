@@ -3,6 +3,7 @@ import 'package:first_flutter_app/layout/shop_app/cubit/cubit.dart';
 import 'package:first_flutter_app/modules/news_app/web_view_screen/web_view_screen.dart';
 import 'package:first_flutter_app/shared/cubit/cubit.dart';
 import 'package:first_flutter_app/shared/style/colors.dart';
+import 'package:first_flutter_app/shared/style/iconly_broken.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -58,8 +59,7 @@ Widget defaultTextField({
   Function onTap,
   Function onchange,
   Function onSubmit,
-}) =>
-    TextFormField(
+}) => TextFormField(
       keyboardType: textInputType,
       controller: controller,
       obscureText: isPassword,
@@ -82,6 +82,26 @@ Widget defaultTextField({
         border: OutlineInputBorder(),
       ),
     );
+
+Widget defaultAppBar({
+ @required BuildContext context,
+  String title,
+  List<Widget> action,
+}) => AppBar(
+  leading: IconButton(
+    onPressed: () {
+      Navigator.pop(context);
+    },
+    icon: Icon(
+      IconBroken.Arrow___Left_2
+    ),
+  ),
+  titleSpacing: 5.0,
+  title: Text(
+    title,
+  ),
+  actions: action,
+);
 
 Widget buildTaskItem(Map model, context) => Dismissible(
   key: Key(model['id'].toString()),
@@ -256,8 +276,7 @@ Widget myDivider() => Padding(
 Widget buildArticleItem(
   article,
   context,
-) =>
-    InkWell(
+) => InkWell(
       onTap: () {
         navigateTo(context, WebViewScreen(article['url']),);
       },
