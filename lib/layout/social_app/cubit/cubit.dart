@@ -268,4 +268,27 @@ class SocialCubit extends Cubit<SocialStates> {
       emit(SocialCreatePostErrorState());
     });
   }
+
+  List<PostModel> posts = [];
+  void getPostsData()
+  {
+    emit(SocialGetPostsLoadingState());
+
+    FirebaseFirestore.instance
+        .collection('posts')
+        .get()
+        .then((value)
+    {
+      value.docs.forEach((element) {
+        posts.add(PostModel.fromJson(element.data()));
+      });
+      emit(SocialGetPostsSuccessState());
+    })
+        .catchError((error) {
+      print(error.toString());
+      emit(SocialGetPostsErrorState(error.toString()));
+
+    });
+  }
+
 }
