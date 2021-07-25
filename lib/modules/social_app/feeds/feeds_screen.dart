@@ -2,6 +2,9 @@ import 'package:conditional_builder/conditional_builder.dart';
 import 'package:first_flutter_app/layout/social_app/cubit/cubit.dart';
 import 'package:first_flutter_app/layout/social_app/cubit/states.dart';
 import 'package:first_flutter_app/models/social_app/post_model.dart';
+import 'package:first_flutter_app/modules/social_app/comments/comments_screen.dart';
+import 'package:first_flutter_app/shared/components/components.dart';
+import 'package:first_flutter_app/shared/components/constants.dart';
 import 'package:first_flutter_app/shared/style/colors.dart';
 import 'package:first_flutter_app/shared/style/iconly_broken.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,7 +19,9 @@ class FeedsScreen extends StatelessWidget {
       listener: (BuildContext context, state) {  },
       builder: (BuildContext context, state) {
         return ConditionalBuilder(
-          condition: SocialCubit.get(context).posts.length > 0 && SocialCubit.get(context).posts.length != null,
+          condition: SocialCubit.get(context).posts.length > 0 && SocialCubit.get(context).userModel != null,
+          // state is! SocialGetPostsLoadingState ,
+          // SocialCubit.get(context).posts.length > 0 && SocialCubit.get(context).userModel != null,
           builder: (BuildContext context) {
             return SingleChildScrollView(
               physics: BouncingScrollPhysics(),
@@ -54,7 +59,7 @@ class FeedsScreen extends StatelessWidget {
                     shrinkWrap: true,
                     physics: BouncingScrollPhysics(),
                     itemBuilder: (context, index) => buildPostItem (SocialCubit.get(context).posts[index], context, index),
-                    separatorBuilder: ( context, int ) => SizedBox(height: 8.0,),
+                    separatorBuilder: ( context, index ) => SizedBox(height: 8.0,),
                     itemCount: SocialCubit.get(context).posts.length,
                   ),
                   SizedBox(
@@ -232,7 +237,7 @@ class FeedsScreen extends StatelessWidget {
                           ),
                           SizedBox(width: 5.0,),
                           Text(
-                            '0 comment',
+                            '${SocialCubit.get(context).commentsNum[index]} comment',
                             style: Theme.of(context).textTheme.caption,
                           ),
                         ],
@@ -271,7 +276,10 @@ class FeedsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  onTap: (){},
+                  onTap: (){
+                    SocialCubit.get(context).getCommentData(index);
+                    navigateTo(context, CommentsScreen(postIndex: index,));
+                  },
                 ),
               ),
               InkWell(

@@ -87,6 +87,7 @@ Widget defaultAppBar({
  @required BuildContext context,
   String title,
   List<Widget> action,
+  double fontSize,
 }) => AppBar(
   leading: IconButton(
     onPressed: () {
@@ -96,9 +97,12 @@ Widget defaultAppBar({
       IconBroken.Arrow___Left_2
     ),
   ),
-  titleSpacing: 5.0,
+  titleSpacing: 0.1,
   title: Text(
     title,
+    style: TextStyle(
+      fontSize: fontSize
+    ),
   ),
   actions: action,
 );

@@ -77,3 +77,26 @@ class SocialLikePostsErrorState extends SocialStates
 
   SocialLikePostsErrorState(this.error);
 }
+
+
+// comment post
+
+class SocialCommentPostsLoadingState extends SocialStates {}
+
+class SocialCommentPostsSuccessState extends SocialStates {}
+
+class SocialCommentPostsErrorState extends SocialStates
+{
+  final String error;
+
+  SocialCommentPostsErrorState(this.error);
+}
+
+class SocialGetCommentSuccessState extends SocialStates {}
+
+class SocialGetCommentErrorState extends SocialStates
+{
+  final String error;
+
+  SocialGetCommentErrorState(this.error);
+}
