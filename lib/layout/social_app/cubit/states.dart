@@ -13,6 +13,17 @@ class SocialGetUserErrorState extends SocialStates
   SocialGetUserErrorState(this.error);
 }
 
+class SocialGetAllUserLoadingState extends SocialStates {}
+
+class SocialGetAllUserSuccessState extends SocialStates {}
+
+class SocialGetAllUserErrorState extends SocialStates
+{
+  final String error;
+
+  SocialGetAllUserErrorState(this.error);
+}
+
 class SocialChangeBottomNavState extends SocialStates {}
 
 class SocialAddPostState extends SocialStates {}
@@ -100,3 +111,11 @@ class SocialGetCommentErrorState extends SocialStates
 
   SocialGetCommentErrorState(this.error);
 }
+
+
+// chat
+class SocialSendMessageSuccessState extends SocialStates {}
+
+class SocialSendMessageErrorState extends SocialStates {}
+
+class SocialGetMessagesSuccessState extends SocialStates {}
