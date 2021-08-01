@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:first_flutter_app/layout/news_app/cubit/cubit.dart';
 import 'package:first_flutter_app/layout/shop_app/cubit/cubit.dart';
 import 'package:first_flutter_app/layout/shop_app/shop_layout.dart';
@@ -9,6 +10,7 @@ import 'package:first_flutter_app/modules/shop_app/login/shop_login_scree.dart';
 import 'package:first_flutter_app/modules/shop_app/on_boarding/on_boarding_screen.dart';
 import 'package:first_flutter_app/modules/social_app/social_login/social_login_scree.dart';
 import 'package:first_flutter_app/shared/bloc_observer.dart';
+import 'package:first_flutter_app/shared/components/components.dart';
 import 'package:first_flutter_app/shared/components/constants.dart';
 import 'package:first_flutter_app/shared/cubit/cubit.dart';
 import 'package:first_flutter_app/shared/cubit/states.dart';
@@ -22,8 +24,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
-
 import 'layout/news_app/news_layout.dart';
+
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print('on background message');
+  print(message.data.toString());
+
+  showToast(message: 'on background message', state: ToastStates.SUCCESS);
+}
+
 
 void main() async
 {
@@ -32,6 +41,27 @@ void main() async
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
+  var token = await FirebaseMessaging.instance.getToken();
+  print(token);
+
+  // foreground fcm
+  FirebaseMessaging.onMessage.listen((event) {
+    print('on Message');
+    print(event.data.toString());
+
+    showToast(message: 'on Message', state: ToastStates.SUCCESS);
+  });
+
+  // when click on notification to open app
+  FirebaseMessaging.onMessageOpenedApp.listen((event) {
+    print('on Message Opened App');
+    print(event.data.toString());
+
+    showToast(message: 'on Message Opened App', state: ToastStates.SUCCESS);
+  });
+
+  // background fcm
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   Bloc.observer = MyBlocObserver();
   DioHelper.init();

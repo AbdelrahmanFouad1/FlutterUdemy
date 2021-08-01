@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:first_flutter_app/layout/social_app/cubit/cubit.dart';
 import 'package:first_flutter_app/layout/social_app/cubit/states.dart';
 import 'package:first_flutter_app/modules/social_app/edit_profile/edit_profile_screen.dart';
@@ -167,6 +168,28 @@ class SettingsScreen extends StatelessWidget {
                       IconBroken.Edit,
                       size: 16.0,
                     ),
+                  ),
+                ],
+              ),
+
+              Row(
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      FirebaseMessaging.instance.subscribeToTopic('friend');
+                    },
+                    child: Text(
+                      'Subscribe'
+                    )
+                  ),
+                  SizedBox(width: 20.0,),
+                  OutlinedButton(
+                      onPressed: () {
+                        FirebaseMessaging.instance.unsubscribeFromTopic('friend');
+                      },
+                      child: Text(
+                          'un Subscribe'
+                      )
                   ),
                 ],
               ),
