@@ -6,6 +6,10 @@ class NewsBottomNavStates extends NewsStates{}
 
 class NewsGetBusinessLoadingStates extends NewsStates{}
 
+class NewsSetDesktopState extends NewsStates{}
+
+class NewsSelectBusinessItemState extends NewsStates{}
+
 class NewsGetBusinessSuccessStates extends NewsStates{}
 
 class NewsGetBusinessErrorStates extends NewsStates{

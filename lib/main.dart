@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
+import 'package:desktop_window/desktop_window.dart';
 import 'package:first_flutter_app/layout/news_app/cubit/cubit.dart';
 import 'package:first_flutter_app/shared/bloc_observer.dart';
 import 'package:first_flutter_app/shared/cubit/cubit.dart';
@@ -12,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import 'layout/news_app/news_layout.dart';
 
@@ -19,6 +23,10 @@ void main() async
 {
   // بيتأكد ان كل حاجه هنا في الميثود خلصت و بعدين يتفح الابلكيشن
   WidgetsFlutterBinding.ensureInitialized();
+
+  //set minimum width and height on desktop
+  // if (Platform.isWindows)
+  //   await DesktopWindow.setMinWindowSize(Size(450.0, 900.0,));
 
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
@@ -45,7 +53,7 @@ class MyApp extends StatelessWidget {
               ..getScience()),
         BlocProvider(
           create: (BuildContext context) =>
-              AppCubit()..changeTheme(fromShared: isDark),
+          AppCubit()..changeTheme(fromShared: isDark),
         ),
       ],
       child: BlocConsumer<AppCubit, AppStates>(
@@ -82,9 +90,9 @@ class MyApp extends StatelessWidget {
                   backgroundColor: Colors.white),
               textTheme: TextTheme(
                 bodyText1: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -118,19 +126,19 @@ class MyApp extends StatelessWidget {
               ),
               textTheme: TextTheme(
                 bodyText1: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
                 ),
               ),
             ),
             themeMode: AppCubit.get(context).darkMode? ThemeMode.dark : ThemeMode.light,
-            home: NewsLayout(),
+            home: NewsLayout()
           );
         },
       ),
     );
   }
 
-  }
+}
 

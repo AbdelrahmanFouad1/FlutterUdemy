@@ -45,7 +45,31 @@ class NewsCubit extends Cubit<NewsStates>{
     emit(NewsBottomNavStates());
   }
 
+
   List<dynamic> business = [];
+  int selectedBusinessItem = 0;
+  bool isDesktop = false;
+  // List<bool> businessSelectedItem = [];
+
+  void setDesktop(bool value)
+  {
+    isDesktop = value;
+    emit(NewsSetDesktopState());
+  }
+
+  void selectBusinessItem(index)
+  {
+    // for(int i = 0 ; i < businessSelectedItem.length ; i ++)
+    // {
+    //   if(i == index)
+    //     businessSelectedItem[i] = true;
+    //   else
+    //     businessSelectedItem[i] = false;
+    // }
+    selectedBusinessItem = index;
+
+    emit(NewsSelectBusinessItemState());
+  }
 
   void getBusiness(){
 
@@ -61,6 +85,9 @@ class NewsCubit extends Cubit<NewsStates>{
     ).then((value) {
       //print(value.data['articles'][0]['title']);
       business = value.data['articles'];
+      business.forEach((element) {
+        // businessSelectedItem.add(false);
+      });
       print(business[0]['title']);
 
       emit(NewsGetBusinessSuccessStates());
