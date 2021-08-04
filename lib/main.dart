@@ -6,6 +6,7 @@ import 'package:first_flutter_app/layout/shop_app/cubit/cubit.dart';
 import 'package:first_flutter_app/layout/shop_app/shop_layout.dart';
 import 'package:first_flutter_app/layout/social_app/cubit/cubit.dart';
 import 'package:first_flutter_app/layout/social_app/social_layout.dart';
+import 'package:first_flutter_app/modules/native_code.dart';
 import 'package:first_flutter_app/modules/shop_app/login/shop_login_scree.dart';
 import 'package:first_flutter_app/modules/shop_app/on_boarding/on_boarding_screen.dart';
 import 'package:first_flutter_app/modules/social_app/social_login/social_login_scree.dart';
@@ -133,7 +134,7 @@ class MyApp extends StatelessWidget {
             darkTheme: darkTheme,
             themeMode: ThemeMode.light,
             // AppCubit.get(context).darkMode? ThemeMode.dark : ThemeMode.light,
-            home: startWidget,
+            home: NativeCodeScreen(),
           );
         },
       ),
